@@ -34,6 +34,7 @@ export async function POST(req: NextRequest) {
         .from('leads')
         .select('*')
         .eq('contact_email', fromEmail)
+        .order('last_activity', { ascending: false, nullsFirst: false })
         .limit(1)
         .maybeSingle()
       lead = data
