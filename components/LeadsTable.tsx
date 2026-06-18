@@ -3,9 +3,9 @@
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { Mail, ExternalLink, Search, Loader2, CheckCircle2 } from 'lucide-react'
-import type { Lead, Confidence, Stage } from '@/types'
+import type { Lead, Confidence, Stage, LeadType } from '@/types'
 import { STAGES } from '@/types'
-import { stageColor, confidenceColor, scoreColor, formatDate } from '@/lib/utils'
+import { stageColor, confidenceColor, scoreColor, leadTypeColor, formatDate } from '@/lib/utils'
 import EmailSentModal, { type EmailSendResult } from './EmailSentModal'
 
 export default function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
@@ -15,6 +15,7 @@ export default function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
   const [sector, setSector] = useState('all')
   const [confidence, setConfidence] = useState<'all' | Confidence>('all')
   const [stage, setStage] = useState<'all' | Stage>('all')
+  const [leadType, setLeadType] = useState<'all' | LeadType>('all')
   const [minScore, setMinScore] = useState(0)
   const [sendingId, setSendingId] = useState<string | null>(null)
   const [sentIds, setSentIds] = useState<Set<string>>(new Set())
@@ -36,6 +37,7 @@ export default function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
       if (sector !== 'all' && l.sector !== sector) return false
       if (confidence !== 'all' && l.confidence !== confidence) return false
       if (stage !== 'all' && l.stage !== stage) return false
+      if (leadType !== 'all' && l.lead_type !== leadType) return false
       if (l.score < minScore) return false
       return true
     })
@@ -94,7 +96,7 @@ export default function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
       <EmailSentModal result={emailResult} onClose={() => setEmailResult(null)} />
 
       {/* Filters */}
-      <div className="card grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-6">
+      <div className="card grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-7">
         <div className="relative lg:col-span-2">
           <Search className="pointer-events-none absolute left-3 top-2.5 text-ink-400" size={16} />
           <input
@@ -141,7 +143,17 @@ export default function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
           ))}
         </select>
 
-        <div className="flex items-center gap-2 sm:col-span-2 lg:col-span-6">
+        <select
+          value={leadType}
+          onChange={(e) => setLeadType(e.target.value as 'all' | LeadType)}
+          className="input-base"
+        >
+          <option value="all">All lead types</option>
+          <option value="End Client">End Client</option>
+          <option value="Partner Agency">Partner Agency</option>
+        </select>
+
+        <div className="flex items-center gap-2 sm:col-span-2 lg:col-span-7">
           <label className="whitespace-nowrap text-xs font-medium text-ink-500">
             Min score: {minScore}
           </label>
@@ -182,9 +194,12 @@ export default function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
                   <Link href={`/leads/${lead.id}`} className="font-medium text-ink-900 hover:text-brand-600">
                     {lead.company_name}
                   </Link>
-                  <div className="mt-0.5">
+                  <div className="mt-0.5 flex flex-wrap gap-1">
                     <span className={`inline-block rounded px-1.5 py-0.5 text-[10px] font-medium ${confidenceColor(lead.confidence)}`}>
                       {lead.confidence}
+                    </span>
+                    <span className={`inline-block rounded px-1.5 py-0.5 text-[10px] font-medium ${leadTypeColor(lead.lead_type)}`}>
+                      {lead.lead_type}
                     </span>
                   </div>
                 </td>
@@ -280,6 +295,9 @@ export default function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
               <span className={`font-semibold ${scoreColor(lead.score)}`}>Score: {lead.score}</span>
               <span className={`rounded px-1.5 py-0.5 text-[10px] font-medium ${confidenceColor(lead.confidence)}`}>
                 {lead.confidence}
+              </span>
+              <span className={`rounded px-1.5 py-0.5 text-[10px] font-medium ${leadTypeColor(lead.lead_type)}`}>
+                {lead.lead_type}
               </span>
               <span className="text-ink-400">{formatDate(lead.last_activity)}</span>
             </div>

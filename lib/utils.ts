@@ -68,6 +68,12 @@ export function stageBarColor(stage: Stage): string {
   }
 }
 
+export function leadTypeColor(type: string): string {
+  return type === 'Partner Agency'
+    ? 'bg-indigo-50 text-indigo-700 border border-indigo-200'
+    : 'bg-ink-100 text-ink-600 border border-ink-200'
+}
+
 export function scoreColor(score: number): string {
   if (score >= 80) return 'text-sage-600'
   if (score >= 50) return 'text-amber-600'

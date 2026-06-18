@@ -8,7 +8,7 @@ import {
 } from 'lucide-react'
 import type { Lead, EmailLog, Stage } from '@/types'
 import { STAGES } from '@/types'
-import { stageColor, confidenceColor, scoreColor, formatDateTime, formatDate } from '@/lib/utils'
+import { stageColor, confidenceColor, scoreColor, leadTypeColor, formatDateTime, formatDate } from '@/lib/utils'
 import { getSupabaseBrowserClient } from '@/lib/supabase-browser'
 import EmailSentModal, { type EmailSendResult } from './EmailSentModal'
 
@@ -98,6 +98,9 @@ export default function LeadDetail({ lead: initialLead, emailLogs }: { lead: Lea
               <div className="flex items-center gap-2">
                 <span className={`rounded-md px-3 py-1 text-xs font-medium ${confidenceColor(lead.confidence)}`}>
                   {lead.confidence} confidence
+                </span>
+                <span className={`rounded-md px-3 py-1 text-xs font-medium ${leadTypeColor(lead.lead_type)}`}>
+                  {lead.lead_type}
                 </span>
                 <span className={`text-lg font-semibold ${scoreColor(lead.score)}`}>{lead.score}</span>
               </div>
