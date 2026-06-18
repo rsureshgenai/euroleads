@@ -38,6 +38,7 @@ create table if not exists public.leads (
   ),
   last_activity timestamptz,
   notes text,
+  roles_needed jsonb not null default '[]'::jsonb,
   created_at timestamptz not null default now()
 );
 
@@ -104,3 +105,15 @@ create policy "Authenticated users can update settings" on public.settings
 -- ── Storage bucket for brochures ────────────────────────
 -- Run separately if needed (or create via Supabase Dashboard > Storage):
 -- insert into storage.buckets (id, name, public) values ('brochures', 'brochures', true);
+
+create policy "Public can read brochures" on storage.objects
+  for select using (bucket_id = 'brochures');
+
+create policy "Authenticated users can upload brochures" on storage.objects
+  for insert with check (bucket_id = 'brochures' and auth.role() = 'authenticated');
+
+create policy "Authenticated users can update brochures" on storage.objects
+  for update using (bucket_id = 'brochures' and auth.role() = 'authenticated');
+
+create policy "Authenticated users can delete brochures" on storage.objects
+  for delete using (bucket_id = 'brochures' and auth.role() = 'authenticated');

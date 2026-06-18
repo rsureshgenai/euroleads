@@ -31,6 +31,7 @@ export interface Lead {
   stage: Stage
   last_activity: string | null
   notes: string | null
+  roles_needed: RoleNeeded[]
   created_at: string
 }
 
@@ -52,6 +53,11 @@ export interface AppUser {
   role: 'admin' | 'member'
 }
 
+export interface RoleNeeded {
+  role: string
+  quantity: number
+}
+
 export interface ExtractedLead {
   company_name: string
   country: string
@@ -61,6 +67,7 @@ export interface ExtractedLead {
   contact_website: string | null
   confidence: Confidence
   score: number
+  roles_needed: RoleNeeded[]
 }
 
 export interface TargetSettings {

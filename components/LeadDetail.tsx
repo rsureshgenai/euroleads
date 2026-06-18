@@ -106,6 +106,16 @@ export default function LeadDetail({ lead: initialLead, emailLogs }: { lead: Lea
             <div className="mt-4 rounded-md bg-ink-50 p-3">
               <p className="text-xs font-medium text-ink-400">Evidence</p>
               <p className="mt-1 text-sm italic text-ink-700">&ldquo;{lead.evidence}&rdquo;</p>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {(lead.roles_needed ?? []).length > 0
+                  ? (lead.roles_needed ?? []).map((r, i) => (
+                      <span key={i} className="rounded-md bg-ink-200 px-2 py-0.5 text-xs font-medium text-ink-700">
+                        {r.role} ×{r.quantity}
+                      </span>
+                    ))
+                  : <span className="text-xs text-ink-400">General partnership outreach</span>
+                }
+              </div>
             </div>
 
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">

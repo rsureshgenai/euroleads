@@ -54,6 +54,7 @@ export async function POST(req: NextRequest) {
         source_url: sourceUrl || null,
         confidence: extracted.confidence,
         score: extracted.score,
+        roles_needed: extracted.roles_needed ?? [],
         stage: 'New',
         last_activity: new Date().toISOString(),
       })

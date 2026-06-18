@@ -23,7 +23,9 @@ Return ONLY valid JSON, no markdown fences, no preamble, matching this exact sha
   "contact_email": string|null,
   "contact_website": string|null,
   "confidence": "high"|"medium"|"low",
-  "score": number            // 0-100 lead quality score
+  "score": number,           // 0-100 lead quality score
+  "roles_needed": [{"role": string, "quantity": number}]
+                             // specific job roles + counts mentioned in the text (e.g. "10 carpenters" → {"role":"Carpenter","quantity":10}); [] if none mentioned
 }
 
 Scoring guidance:

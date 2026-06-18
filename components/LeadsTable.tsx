@@ -191,6 +191,16 @@ export default function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
                 <td className="px-4 py-3 text-ink-600">{lead.country} · {lead.sector}</td>
                 <td className="max-w-[220px] px-4 py-3 text-ink-500">
                   <p className="line-clamp-2 italic">&ldquo;{lead.evidence}&rdquo;</p>
+                  <div className="mt-1.5 flex flex-wrap gap-1">
+                    {(lead.roles_needed ?? []).length > 0
+                      ? (lead.roles_needed ?? []).map((r, i) => (
+                          <span key={i} className="rounded-md bg-ink-100 px-1.5 py-0.5 text-[10px] font-medium text-ink-600">
+                            {r.role} ×{r.quantity}
+                          </span>
+                        ))
+                      : <span className="text-[10px] text-ink-400">General partnership outreach</span>
+                    }
+                  </div>
                 </td>
                 <td className={`px-4 py-3 font-semibold ${scoreColor(lead.score)}`}>{lead.score}</td>
                 <td className="px-4 py-3">
@@ -255,6 +265,16 @@ export default function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
             </div>
 
             <p className="line-clamp-2 text-xs italic text-ink-500">&ldquo;{lead.evidence}&rdquo;</p>
+            <div className="flex flex-wrap gap-1">
+              {(lead.roles_needed ?? []).length > 0
+                ? (lead.roles_needed ?? []).map((r, i) => (
+                    <span key={i} className="rounded-md bg-ink-100 px-1.5 py-0.5 text-[10px] font-medium text-ink-600">
+                      {r.role} ×{r.quantity}
+                    </span>
+                  ))
+                : <span className="text-[10px] text-ink-400">General partnership outreach</span>
+              }
+            </div>
 
             <div className="flex items-center gap-3 text-xs">
               <span className={`font-semibold ${scoreColor(lead.score)}`}>Score: {lead.score}</span>
