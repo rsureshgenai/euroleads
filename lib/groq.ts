@@ -24,8 +24,11 @@ Return ONLY valid JSON, no markdown fences, no preamble, matching this exact sha
   "contact_website": string|null,
   "confidence": "high"|"medium"|"low",
   "score": number,           // 0-100 lead quality score
-  "roles_needed": [{"role": string, "quantity": number}]
+  "roles_needed": [{"role": string, "quantity": number}],
                              // specific job roles + counts mentioned in the text (e.g. "10 carpenters" → {"role":"Carpenter","quantity":10}); [] if none mentioned
+  "lead_type": "End Client"|"Partner Agency"
+                             // "Partner Agency" if the company is a recruitment agency, staffing firm, manpower company, or placement agency;
+                             // "End Client" for any business directly hiring workers (hotel, factory, construction company, etc.)
 }
 
 Scoring guidance:

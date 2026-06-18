@@ -55,6 +55,7 @@ export async function POST(req: NextRequest) {
         confidence: extracted.confidence,
         score: extracted.score,
         roles_needed: extracted.roles_needed ?? [],
+        lead_type: extracted.lead_type ?? 'End Client',
         stage: 'New',
         last_activity: new Date().toISOString(),
       })

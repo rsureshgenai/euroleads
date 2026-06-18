@@ -39,6 +39,7 @@ create table if not exists public.leads (
   last_activity timestamptz,
   notes text,
   roles_needed jsonb not null default '[]'::jsonb,
+  lead_type text not null default 'End Client' check (lead_type in ('End Client', 'Partner Agency')),
   created_at timestamptz not null default now()
 );
 

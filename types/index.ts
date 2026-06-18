@@ -1,5 +1,7 @@
 export type Confidence = 'high' | 'medium' | 'low'
 
+export type LeadType = 'End Client' | 'Partner Agency'
+
 export type Stage =
   | 'New'
   | 'Contacted'
@@ -32,6 +34,7 @@ export interface Lead {
   last_activity: string | null
   notes: string | null
   roles_needed: RoleNeeded[]
+  lead_type: LeadType
   created_at: string
 }
 
@@ -68,6 +71,7 @@ export interface ExtractedLead {
   confidence: Confidence
   score: number
   roles_needed: RoleNeeded[]
+  lead_type: LeadType
 }
 
 export interface TargetSettings {
